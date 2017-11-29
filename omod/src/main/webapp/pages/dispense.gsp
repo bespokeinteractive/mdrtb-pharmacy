@@ -1,5 +1,5 @@
 <%
-    ui.decorateWith("appui", "standardEmrPage", [title: "Finance Dashboard"])
+    ui.decorateWith("appui", "standardEmrPage", [title: "Dispense Drugs"])
 %>
 
 <style>
@@ -12,10 +12,10 @@
 </style>
 
 
-<% if (view == "srs"){ %>
-	${ui.includeFragment("mdrtbpharmacy", "dispensedr")}
-<% } else if (view == "2") { %>
+<% if (program.programId == 1){ %>
 	${ui.includeFragment("mdrtbpharmacy", "dispensetb")}
+<% } else if (program.programId == 2) { %>
+	${ui.includeFragment("mdrtbpharmacy", "dispensedr")}
 <% } else { %>
 	404 - Page Not Found
 <% } %>
