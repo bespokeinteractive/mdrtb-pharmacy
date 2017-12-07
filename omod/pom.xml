@@ -10,7 +10,7 @@
 	<artifactId>mdrtbpharmacy-omod</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>MDRTB Pharmacy Module</name>
+	<name>MDRTB Pharmacy</name>
 	<description>OpenMRS module for Dispensing TB/MDRTB Drugs</description>
 
 	<dependencies>
@@ -45,6 +45,11 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>mdrtb-api</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>mdrtbinventory-api</artifactId>
+        </dependency>
 		<!-- End OpenMRS modules -->
 
 		<!-- Begin OpenMRS core -->

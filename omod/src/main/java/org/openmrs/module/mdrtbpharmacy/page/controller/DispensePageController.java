@@ -40,6 +40,7 @@ public class DispensePageController {
         model.addAttribute("qtrs", qtrs);
 
         model.addAttribute("program", program);
+        model.addAttribute("location", session.getSessionLocation());
 
         return null;
     }
