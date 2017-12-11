@@ -17,10 +17,7 @@ import org.openmrs.ui.framework.annotation.BindParams;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Dennis Henry
@@ -49,6 +46,29 @@ public class DispenseFragmentController {
 
         List<PatientProgramDetails> patients = Context.getService(MdrtbService.class).getPatientsFromDetails(session.getSessionLocation(), program, start, ended);
         return SimpleObject.fromCollection(patients, ui, "id", "tbmuNumber", "weight", "patientProgram.id", "patientProgram.patient.names", "patientProgram.patient.age");
+    }
+
+    public List<SimpleObject> getDispenses(UiSessionContext session,
+                                           UiUtils ui){
+        List<InventoryDrugDispense> dispenses = inventory.getInventoryDrugDispense(session.getSessionLocation());
+        return SimpleObject.fromCollection(dispenses, ui, "id", "period", "date", "program.name", "location.name", "description");
+    }
+
+    public List<SimpleObject> getPatientIssues(@RequestParam(value = "program") Program program,
+                                               @RequestParam(value = "period") String period,
+                                               UiSessionContext session,
+                                               UiUtils ui){
+        List<InventoryDrugDispenseDetailsTbSummaryPatients> patients = inventory.getInventoryDrugDispenseDetailsTbSummaryPatients(session.getSessionLocation(), period);
+        return SimpleObject.fromCollection(patients, ui, "id", "programDetails.patientProgram.patient.names", "programDetails.patientProgram.patient.age", "programDetails.weight", "period", "rhze", "rh", "rhz", "rhp", "eth", "iso");
+    }
+
+    public List<SimpleObject> getShortExpiryBatches(@RequestParam(value = "expiry") Date expiry,
+                                                    UiSessionContext session,
+                                                    UiUtils ui){
+        List<Location> locations = new ArrayList<Location>();
+        locations.add(session.getSessionLocation());
+        List<InventoryDrugBatches> batches = inventory.getShortExpiryBatches(locations, expiry);
+        return SimpleObject.fromCollection(batches, ui, "id", "receipt", "available", "expiry", "batch", "expired", "item.drug.drug.name", "item.drug.category.name", "item.drug.formulation.name", "item.drug.formulation.dosage");
     }
 
     public SimpleObject dispenseForTbPatients(@BindParams("dispense") DispenseWrapper wrapper,
